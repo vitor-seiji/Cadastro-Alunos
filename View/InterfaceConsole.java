@@ -261,8 +261,13 @@ public class InterfaceConsole implements InterfaceCadastro {
     
     public void salvarArquivo(){
         String nomeArq;
-        System.out.println("Arquivo: ");
-        nomeArq = sc.nextLine();
+        do{
+            System.out.println("Arquivo: ");
+            nomeArq = sc.nextLine();
+            if(nomeArq.isBlank()){
+                System.out.println("Insira um arquivo válido.");
+            }
+        }while(nomeArq.isBlank());
         ArquivoBinario Ab = new ArquivoBinario(nomeArq);
         Object Alunos = armazenador.retornarAlunos();
         Ab.gravarObj(Alunos);
@@ -270,8 +275,13 @@ public class InterfaceConsole implements InterfaceCadastro {
     
     public Object lerArquivo(){
         String nomeArq;
-        System.out.println("Arquivo: ");
-        nomeArq = sc.nextLine();
+        do{
+            System.out.println("Arquivo: ");
+            nomeArq = sc.nextLine();
+            if(nomeArq.isBlank()){
+                System.out.println("Insira um arquivo válido.");
+            }
+        }while(nomeArq.isBlank());
         ArquivoBinario Ab = new ArquivoBinario(nomeArq);
         Aluno[] alunos = (Aluno[]) Ab.lerObj();
         return alunos;

@@ -232,7 +232,12 @@ public class InterfaceGrafica implements InterfaceCadastro {
     
     public void salvarArquivo(){
         String nomeArq;
-        nomeArq = JOptionPane.showInputDialog("Arquivo:");
+        do{
+           nomeArq = JOptionPane.showInputDialog("Arquivo:"); 
+           if(nomeArq.isBlank()){
+               JOptionPane.showMessageDialog(null, "Insira um Arquivo válido.");
+           }
+        }while(nomeArq.isBlank());
         ArquivoBinario Ab = new ArquivoBinario(nomeArq);
         Object Alunos = armazenador.retornarAlunos();
         Ab.gravarObj(Alunos);
@@ -240,10 +245,21 @@ public class InterfaceGrafica implements InterfaceCadastro {
     
     public Object lerArquivo(){
         String nomeArq;
-        nomeArq = JOptionPane.showInputDialog("Arquivo:");
-        ArquivoBinario Ab = new ArquivoBinario(nomeArq);
-        Aluno[] alunos = (Aluno[]) Ab.lerObj();
-        return alunos;
+        try{
+            do{
+               nomeArq = JOptionPane.showInputDialog("Arquivo:"); 
+               if(nomeArq.isBlank()){
+                   JOptionPane.showMessageDialog(null, "Insira um Arquivo válido.");
+               }
+            }while(nomeArq.isBlank());
+            ArquivoBinario Ab = new ArquivoBinario(nomeArq);
+            Aluno[] alunos = (Aluno[]) Ab.lerObj();
+            return alunos;
+        }
+        catch(Exception e){
+            JOptionPane.showMessageDialog(null, "Erro ao carregar arquivo.");
+            return null;
+        }
     }
 
     //Método para o menu principal do cadastro

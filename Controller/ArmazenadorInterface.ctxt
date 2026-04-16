@@ -2,6 +2,8 @@
 comment0.target=ArmazenadorInterface
 comment1.params=a
 comment1.target=boolean\ inserir(Model.Aluno)
+comment10.params=alunos
+comment10.target=void\ setAlunos(Model.Aluno[])
 comment2.params=ra
 comment2.target=boolean\ remover(java.lang.String)
 comment3.params=
@@ -18,4 +20,4 @@ comment8.params=ra
 comment8.target=Model.Aluno\ buscarAluno(java.lang.String)
 comment9.params=
 comment9.target=Model.Aluno[]\ retornarAlunos()
-numComments=10
+numComments=11
