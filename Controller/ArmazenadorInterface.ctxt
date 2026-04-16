@@ -1,0 +1,21 @@
+#BlueJ class context
+comment0.target=ArmazenadorInterface
+comment1.params=a
+comment1.target=boolean\ inserir(Model.Aluno)
+comment2.params=ra
+comment2.target=boolean\ remover(java.lang.String)
+comment3.params=
+comment3.target=java.lang.String\ listar()
+comment4.params=
+comment4.target=int\ contagem()
+comment5.params=
+comment5.target=boolean\ quantidadeMaxAlunos()
+comment6.params=
+comment6.target=boolean\ quantidadeMinAlunos()
+comment7.params=ra
+comment7.target=boolean\ validarRA(java.lang.String)
+comment8.params=ra
+comment8.target=Model.Aluno\ buscarAluno(java.lang.String)
+comment9.params=
+comment9.target=Model.Aluno[]\ retornarAlunos()
+numComments=10
