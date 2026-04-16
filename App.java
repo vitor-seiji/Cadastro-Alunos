@@ -10,6 +10,7 @@ public class App {
     public static void main(String[] args) {
         Scanner sc = new Scanner(System.in);
         int escolha = 0;
+        //sou a ana pulao
         do{
             try {
                     System.out.print("Escolha a interface:\n1- Gráfica\n2- Console\n");
