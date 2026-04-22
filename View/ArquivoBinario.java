@@ -5,65 +5,43 @@ import java.io.File;
 import java.io.FileOutputStream;
 import java.io.FileInputStream;
 
-
-/**
- * Escreva uma descrição da classe ArquivoBinario aqui.
- * 
- * @author (seu nome) 
- * @version (um número da versão ou uma data)
- */
 public class ArquivoBinario
 {
     String nomeArq;
-    
+
     ArquivoBinario(String nomeArq){
         this.nomeArq = nomeArq;
     }
 
     /**
-     * Method gravarObj grava um objeto em arquivo
-     *
-     * @param objeto objeto a ser gravado
-     * @param nomeArq nome do arquivo
+     * Grava um objeto em arquivo. Lança IOException em caso de falha.
      */
-    public void gravarObj(Object objeto){
+    public void gravarObj(Object objeto) throws Exception {
         ObjectOutputStream output = null;
         try {
             File file = new File(this.nomeArq);
             output = new ObjectOutputStream(new FileOutputStream(file));
-            output.writeObject(objeto);  // escreve o objeto no arquivo
-        } catch(Exception e){
-            System.out.println(e.toString());
+            output.writeObject(objeto);
         } finally {
-            try {
-                output.close();
-            } catch(Exception ex) {
-                // Nao faz nada!
+            if (output != null) {
+                try { output.close(); } catch(Exception ex) { }
             }
         }
     }
 
     /**
-     * Method lerObj
-     *
-     * @param nomeArq nome do arquivo a ser lido
-     * @return Object o objeto lido
+     * Lê um objeto do arquivo. Lança IOException se o arquivo não existir ou for inválido.
      */
-    public Object lerObj(){
+    public Object lerObj() throws Exception {
         Object objeto = null;
         ObjectInputStream input = null;
         try {
             File file = new File(this.nomeArq);
             input = new ObjectInputStream(new FileInputStream(file));
-            objeto = (Object)input.readObject();  // le o objeto do arquivo
-        }
-        catch(Exception e){
-            System.out.println(e.toString());
+            objeto = input.readObject();
         } finally {
-            try {
-                input.close();
-            } catch(Exception ex) {
-                // Nao faz nada!
+            if (input != null) {
+                try { input.close(); } catch(Exception ex) { }
             }
         }
         return objeto;

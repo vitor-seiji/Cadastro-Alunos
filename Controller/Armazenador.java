@@ -101,6 +101,12 @@ public class Armazenador implements ArmazenadorInterface{
     }
     
     public void setAlunos(Aluno[] alunos){
+        if(alunos == null) return;
+        // Se o arquivo tiver mais alunos do que a capacidade atual,
+        // expande o array automaticamente para o tamanho do arquivo
+        if(alunos.length > arm.length){
+            this.arm = new Aluno[alunos.length];
+        }
         this.arm = alunos;
         // recalcula o contador
         cont = 0;

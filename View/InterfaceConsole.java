@@ -268,11 +268,15 @@ public class InterfaceConsole implements InterfaceCadastro {
                 System.out.println("Insira um arquivo válido.");
             }
         }while(nomeArq.isBlank());
-        ArquivoBinario Ab = new ArquivoBinario(nomeArq);
-        Object Alunos = armazenador.retornarAlunos();
-        Ab.gravarObj(Alunos);
+        try {
+            ArquivoBinario Ab = new ArquivoBinario(nomeArq);
+            Ab.gravarObj(armazenador.retornarAlunos());
+            System.out.println("Arquivo salvo com sucesso!");
+        } catch (Exception e) {
+            System.out.println("Erro ao salvar arquivo: " + e.getMessage());
+        }
     }
-    
+
     public Object lerArquivo(){
         String nomeArq;
         do{
@@ -282,9 +286,15 @@ public class InterfaceConsole implements InterfaceCadastro {
                 System.out.println("Insira um arquivo válido.");
             }
         }while(nomeArq.isBlank());
-        ArquivoBinario Ab = new ArquivoBinario(nomeArq);
-        Aluno[] alunos = (Aluno[]) Ab.lerObj();
-        return alunos;
+        try {
+            ArquivoBinario Ab = new ArquivoBinario(nomeArq);
+            Aluno[] alunos = (Aluno[]) Ab.lerObj();
+            System.out.println("Arquivo carregado com sucesso!");
+            return alunos;
+        } catch (Exception e) {
+            System.out.println("Erro ao carregar arquivo: " + e.getMessage());
+            return null;
+        }
     }
 
     //Menu principal do cadastro
@@ -325,7 +335,7 @@ public class InterfaceConsole implements InterfaceCadastro {
                     salvarArquivo();
                     break;
                 case 6:
-                    lerArquivo();
+                    armazenador.setAlunos((Aluno[]) lerArquivo());
                     break;
                 default:
                     System.out.println("Opção inválida.\n");
