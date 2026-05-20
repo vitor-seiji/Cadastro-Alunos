@@ -6,7 +6,9 @@ import Model.Aluno;
 import javax.swing.*;
 import java.util.Scanner;
 
-
+/**
+ * Interface de cadastro via linha de comando (console).
+ */
 public class InterfaceConsole implements InterfaceCadastro {
     //Instancia o armazenador
     private ArmazenadorInterface armazenador;
@@ -14,11 +16,18 @@ public class InterfaceConsole implements InterfaceCadastro {
     //Instacia do scanner
     private Scanner sc = new Scanner(System.in);
 
+    /**
+     * Construtor da interface console.
+     * @param qtde quantidade maxima de alunos a serem cadastrados
+     */
     //Construtor da interface
     public InterfaceConsole(int qtde) {
         this.armazenador = new Armazenador(qtde);
     }
 
+    /**
+     * Coleta os dados via console e insere um novo aluno no cadastro.
+     */
     //Método de inserir um aluno
     public void inserirAluno() {
         if (armazenador.quantidadeMaxAlunos()) {//Se o cadastro estiver cheio não insere
@@ -102,6 +111,9 @@ public class InterfaceConsole implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Solicita o Ra via console e remove o aluno correspondente do cadastro.
+     */
     //Método para remover um aluno do cadastro
     public void removerAluno() {
         if (armazenador.quantidadeMinAlunos()) {//Verifica se há ao menos um aluno cadastrado para ser removido
@@ -127,6 +139,9 @@ public class InterfaceConsole implements InterfaceCadastro {
         System.out.println("Erro ao remover aluno!");
     }
 
+    /**
+     * Solicita o Ra via console e permite editar os dados do aluno encontrado.
+     */
     //Método para editar um aluno cadastrado
     public void editarAluno() {
         if (armazenador.quantidadeMinAlunos()) {//Caso não tenha nenhum aluno cadastrado
@@ -244,6 +259,9 @@ public class InterfaceConsole implements InterfaceCadastro {
         }while(op != 0);
     }
 
+    /**
+     * Exibe no console a lista de todos os alunos cadastrados.
+     */
     //Método para listar os alunos cadastrados
     public void listarAlunos() {
         if(!armazenador.quantidadeMinAlunos()){//Caso tenha ao menos um aluno cadastrado
@@ -254,11 +272,17 @@ public class InterfaceConsole implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Exibe no console o total de alunos cadastrados.
+     */
     //Retorna o total de alunos cadastrados
     public void contagem() {
         System.out.println("Total: " + armazenador.contagem());
     }
-    
+
+    /**
+     * Solicita o nome do arquivo via console e salva o cadastro atual.
+     */
     public void salvarArquivo(){
         String nomeArq;
         do{
@@ -277,6 +301,10 @@ public class InterfaceConsole implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Solicita o nome do arquivo via console e carrega o cadastro salvo.
+     * @return array de alunos lido do arquivo, ou null em caso de erro
+     */
     public Object lerArquivo(){
         String nomeArq;
         do{
@@ -297,6 +325,9 @@ public class InterfaceConsole implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Exibe o menu principal no console e gerencia as opcoes do usuario.
+     */
     //Menu principal do cadastro
     public void executar() {
         int op = -1;

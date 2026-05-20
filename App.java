@@ -6,11 +6,24 @@ import View.InterfaceGrafica;
 
 import java.util.Scanner;
 import javax.swing.JOptionPane;
+/**
+ * Classe de entrada (Main) do sistema CadastroAluno.
+ * Esta classe inicializa a interface gráfica padrão, dispensando a necessidade 
+ * de o usuário solicitar o modo de visualização ou quantidade de alunos.
+ * * @author Ana
+ * @version 1.0
+ */
 public class App {
+    /**
+     * Método principal que dispara a execução do aplicativo.
+     * Configura as dependências do padrão MVC para o sistema CadastroAluno.
+     * * @param args Argumentos de linha de comando (não utilizados).
+     */
     public static void main(String[] args) {
+        // Inicializa o sistema CadastroAluno em modo gráfico por padrão
         Scanner sc = new Scanner(System.in);
         int escolha = 0;
-        //sou a ana pulao
+        
         do{
             try {
                     System.out.print("Escolha a interface:\n1- Gráfica\n2- Console\n");

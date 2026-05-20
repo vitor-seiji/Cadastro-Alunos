@@ -8,15 +8,24 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
+/**
+ * Interface de cadastro via janela grafica (Swing).
+ */
 public class InterfaceGrafica implements InterfaceCadastro {
     // Instancia o armazenador
     private ArmazenadorInterface armazenador;
 
-    // Construtor da interface
+    /**
+     * Construtor da interface grafica.
+     * @param qtde quantidade maxima de alunos a serem cadastrados
+     */
     public InterfaceGrafica(int qtde) {
         this.armazenador = new Armazenador(qtde);
     }
 
+    /**
+     * Exibe um formulario grafico e insere um novo aluno no cadastro.
+     */
     // Método de inserir um aluno — formulário único com todos os campos
     public void inserirAluno() {
         if (armazenador.quantidadeMaxAlunos()) {
@@ -116,6 +125,9 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Solicita o Ra via dialogo grafico e remove o aluno correspondente do cadastro.
+     */
     // Método para a remoção de um aluno
     public void removerAluno() {
         if (armazenador.quantidadeMinAlunos()) {
@@ -135,6 +147,9 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Solicita o Ra via dialogo grafico e exibe formulario para editar os dados do aluno.
+     */
     // Método para a edição dos dados de um aluno — formulário único com todos os campos
     public void editarAluno() {
         if (armazenador.quantidadeMinAlunos()) {
@@ -235,6 +250,9 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Exibe em uma janela grafica a lista de todos os alunos cadastrados.
+     */
     // Método para listar os alunos cadastrados
     public void listarAlunos() {
         if (!armazenador.quantidadeMinAlunos()) {
@@ -244,11 +262,17 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Exibe em uma janela grafica o total de alunos cadastrados.
+     */
     // Método para a contagem de alunos cadastrados
     public void contagem() {
         JOptionPane.showMessageDialog(null, "Total: " + armazenador.contagem());
     }
 
+    /**
+     * Solicita o nome do arquivo via dialogo grafico e salva o cadastro atual.
+     */
     public void salvarArquivo() {
         String nomeArq;
         do {
@@ -267,6 +291,10 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Solicita o nome do arquivo via dialogo grafico e carrega o cadastro salvo.
+     * @return array de alunos lido do arquivo, ou null em caso de erro
+     */
     public Object lerArquivo() {
         String nomeArq;
         do {
@@ -287,6 +315,9 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
+    /**
+     * Exibe o menu principal em uma janela grafica e gerencia as opcoes do usuario.
+     */
     // Método para o menu principal do cadastro
     public void executar() {
         String[] opcoes = {"Inserir Aluno", "Remover Aluno", "Listar Alunos", "Editar Cadastro", "Salvar Arquivo", "Ler Arquivo", "Sair"};

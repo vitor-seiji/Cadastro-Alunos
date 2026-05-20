@@ -1,9 +1,9 @@
 #BlueJ package file
-dependency1.from=Pessoa
-dependency1.to=NomePessoa
+dependency1.from=NomePessoa
+dependency1.to=Texto
 dependency1.type=UsesDependency
-dependency2.from=NomePessoa
-dependency2.to=Texto
+dependency2.from=Pessoa
+dependency2.to=NomePessoa
 dependency2.type=UsesDependency
 objectbench.height=183
 objectbench.width=1896
@@ -21,7 +21,7 @@ package.showExtends=true
 package.showUses=true
 readme.height=60
 readme.name=@README
-readme.width=48
+readme.width=49
 readme.x=10
 readme.y=10
 target1.height=70
