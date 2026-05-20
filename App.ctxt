@@ -1,7 +1,6 @@
 #BlueJ class context
 comment0.target=App
-comment0.text=\r\n\ Classe\ de\ entrada\ (Main)\ do\ sistema\ CadastroAluno.\r\n\ Esta\ classe\ inicializa\ a\ interface\ gr\u00E1fica\ padr\u00E3o,\ dispensando\ a\ necessidade\ \r\n\ de\ o\ usu\u00E1rio\ solicitar\ o\ modo\ de\ visualiza\u00E7\u00E3o\ ou\ quantidade\ de\ alunos.\r\n\ *\ @author\ Ana\r\n\ @version\ 1.0\r\n
+comment0.text=\r\n\ Classe\ de\ entrada\ (Main)\ do\ sistema\ CadastroAluno.\r\n\ Inicia\ diretamente\ a\ interface\ gr\u00E1fica,\ sem\ perguntar\r\n\ estilo\ de\ interface\ nem\ quantidade\ de\ alunos.\r\n\r\n\ @author\ Ana\r\n\ @version\ 2.0\r\n
 comment1.params=args
 comment1.target=void\ main(java.lang.String[])
-comment1.text=\r\n\ M\u00E9todo\ principal\ que\ dispara\ a\ execu\u00E7\u00E3o\ do\ aplicativo.\r\n\ Configura\ as\ depend\u00EAncias\ do\ padr\u00E3o\ MVC\ para\ o\ sistema\ CadastroAluno.\r\n\ *\ @param\ args\ Argumentos\ de\ linha\ de\ comando\ (n\u00E3o\ utilizados).\r\n
 numComments=2

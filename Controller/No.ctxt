@@ -1,0 +1,14 @@
+#BlueJ class context
+comment0.target=No
+comment0.text=\r\n\ N\u00F3\ da\ lista\ encadeada\ de\ alunos.\r\n
+comment1.params=aluno
+comment1.target=No(Model.Aluno)
+comment2.params=
+comment2.target=Model.Aluno\ getAluno()
+comment3.params=aluno
+comment3.target=void\ setAluno(Model.Aluno)
+comment4.params=
+comment4.target=No\ getProximo()
+comment5.params=proximo
+comment5.target=void\ setProximo(No)
+numComments=6

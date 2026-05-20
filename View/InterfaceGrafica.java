@@ -1,42 +1,34 @@
 package View;
+
 import Controller.Armazenador;
 import Controller.ArmazenadorInterface;
 import Model.Aluno;
-import java.io.*;
 
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 
 /**
- * Interface de cadastro via janela grafica (Swing).
+ * Interface de cadastro via janela gráfica (Swing).
+ * Utiliza lista encadeada — sem limite de alunos.
  */
 public class InterfaceGrafica implements InterfaceCadastro {
-    // Instancia o armazenador
+
     private ArmazenadorInterface armazenador;
 
     /**
-     * Construtor da interface grafica.
-     * @param qtde quantidade maxima de alunos a serem cadastrados
+     * Construtor 
      */
-    public InterfaceGrafica(int qtde) {
-        this.armazenador = new Armazenador(qtde);
+    public InterfaceGrafica() {
+        this.armazenador = new Armazenador();
     }
 
-    /**
-     * Exibe um formulario grafico e insere um novo aluno no cadastro.
-     */
-    // Método de inserir um aluno — formulário único com todos os campos
+    // ------------------------------------------------------------------ inserir
+    @Override
     public void inserirAluno() {
-        if (armazenador.quantidadeMaxAlunos()) {
-            JOptionPane.showMessageDialog(null, "Cadastro cheio.");
-            return;
-        }
-
         JDialog dialog = new JDialog((Frame) null, "Cadastrar Aluno", true);
         dialog.setLayout(new BorderLayout(10, 10));
 
-        // Painel dos campos
         JPanel campos = new JPanel(new GridLayout(5, 2, 8, 8));
         campos.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 15));
 
@@ -52,12 +44,10 @@ public class InterfaceGrafica implements InterfaceCadastro {
         campos.add(new JLabel("Curso:"));    campos.add(tfCurso);
         campos.add(new JLabel("Semestre:")); campos.add(tfSemestre);
 
-        // Label de erro
         JLabel lblErro = new JLabel(" ");
         lblErro.setForeground(Color.RED);
         lblErro.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
-        // Painel dos botões
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnCancelar  = new JButton("Cancelar");
         JButton btnCadastrar = new JButton("Cadastrar");
@@ -69,7 +59,7 @@ public class InterfaceGrafica implements InterfaceCadastro {
         sul.add(botoes, BorderLayout.SOUTH);
 
         dialog.add(campos, BorderLayout.CENTER);
-        dialog.add(sul, BorderLayout.SOUTH);
+        dialog.add(sul,    BorderLayout.SOUTH);
 
         final boolean[] confirmado = {false};
 
@@ -82,7 +72,8 @@ public class InterfaceGrafica implements InterfaceCadastro {
             String curso    = tfCurso.getText().trim();
             String semStr   = tfSemestre.getText().trim();
 
-            if (ra.isBlank() || nome.isBlank() || idadeStr.isBlank() || curso.isBlank() || semStr.isBlank()) {
+            if (ra.isBlank() || nome.isBlank() || idadeStr.isBlank()
+                    || curso.isBlank() || semStr.isBlank()) {
                 lblErro.setText("Preencha todos os campos.");
                 return;
             }
@@ -106,13 +97,9 @@ public class InterfaceGrafica implements InterfaceCadastro {
                 return;
             }
 
-            Aluno a = new Aluno(nome, idade, ra, curso, semestre);
-            if (armazenador.inserir(a)) {
-                confirmado[0] = true;
-                dialog.dispose();
-            } else {
-                lblErro.setText("Erro ao inserir aluno.");
-            }
+            armazenador.inserir(new Aluno(nome, idade, ra, curso, semestre));
+            confirmado[0] = true;
+            dialog.dispose();
         });
 
         dialog.pack();
@@ -125,42 +112,38 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
-    /**
-     * Solicita o Ra via dialogo grafico e remove o aluno correspondente do cadastro.
-     */
-    // Método para a remoção de um aluno
+    // ------------------------------------------------------------------ remover
+    @Override
     public void removerAluno() {
         if (armazenador.quantidadeMinAlunos()) {
             JOptionPane.showMessageDialog(null, "Nenhum aluno cadastrado.");
             return;
         }
-        String ra = JOptionPane.showInputDialog("RA:");
+        String ra = JOptionPane.showInputDialog("RA do aluno a remover:");
         if (ra == null) return;
         if (armazenador.validarRA(ra)) {
-            JOptionPane.showMessageDialog(null, "Ra não encontrado");
+            JOptionPane.showMessageDialog(null, "RA não encontrado.");
             return;
         }
         if (armazenador.remover(ra)) {
             JOptionPane.showMessageDialog(null, "Aluno removido com sucesso!");
         } else {
-            JOptionPane.showMessageDialog(null, "Erro ao remover aluno!");
+            JOptionPane.showMessageDialog(null, "Erro ao remover aluno.");
         }
     }
 
-    /**
-     * Solicita o Ra via dialogo grafico e exibe formulario para editar os dados do aluno.
-     */
-    // Método para a edição dos dados de um aluno — formulário único com todos os campos
+    // ------------------------------------------------------------------ editar
+    @Override
     public void editarAluno() {
         if (armazenador.quantidadeMinAlunos()) {
             JOptionPane.showMessageDialog(null, "Nenhum aluno cadastrado.");
             return;
         }
 
-        String ra = JOptionPane.showInputDialog("Ra:");
+        String ra = JOptionPane.showInputDialog("RA do aluno a editar:");
         if (ra == null) return;
         if (armazenador.validarRA(ra)) {
-            JOptionPane.showMessageDialog(null, "Ra não encontrado.");
+            JOptionPane.showMessageDialog(null, "RA não encontrado.");
             return;
         }
 
@@ -169,7 +152,6 @@ public class InterfaceGrafica implements InterfaceCadastro {
         JDialog dialog = new JDialog((Frame) null, "Editar Aluno", true);
         dialog.setLayout(new BorderLayout(10, 10));
 
-        // Painel dos campos preenchidos com os dados atuais do aluno
         JPanel campos = new JPanel(new GridLayout(4, 2, 8, 8));
         campos.setBorder(BorderFactory.createEmptyBorder(15, 15, 5, 15));
 
@@ -183,12 +165,10 @@ public class InterfaceGrafica implements InterfaceCadastro {
         campos.add(new JLabel("Curso:"));    campos.add(tfCurso);
         campos.add(new JLabel("Semestre:")); campos.add(tfSemestre);
 
-        // Label de erro
         JLabel lblErro = new JLabel(" ");
         lblErro.setForeground(Color.RED);
         lblErro.setBorder(BorderFactory.createEmptyBorder(0, 15, 0, 15));
 
-        // Painel dos botões
         JPanel botoes = new JPanel(new FlowLayout(FlowLayout.RIGHT));
         JButton btnCancelar = new JButton("Cancelar");
         JButton btnSalvar   = new JButton("Salvar");
@@ -197,10 +177,10 @@ public class InterfaceGrafica implements InterfaceCadastro {
 
         JPanel sul = new JPanel(new BorderLayout());
         sul.add(lblErro, BorderLayout.NORTH);
-        sul.add(botoes, BorderLayout.SOUTH);
+        sul.add(botoes,  BorderLayout.SOUTH);
 
         dialog.add(campos, BorderLayout.CENTER);
-        dialog.add(sul, BorderLayout.SOUTH);
+        dialog.add(sul,    BorderLayout.SOUTH);
 
         final boolean[] confirmado = {false};
 
@@ -250,120 +230,105 @@ public class InterfaceGrafica implements InterfaceCadastro {
         }
     }
 
-    /**
-     * Exibe em uma janela grafica a lista de todos os alunos cadastrados.
-     */
-    // Método para listar os alunos cadastrados
+    // ------------------------------------------------------------------ listar
+    @Override
     public void listarAlunos() {
-        if (!armazenador.quantidadeMinAlunos()) {
-            JOptionPane.showMessageDialog(null, armazenador.listar());
-        } else {
-            JOptionPane.showMessageDialog(null, "Nenhum aluno cadastrado!");
+        if (armazenador.quantidadeMinAlunos()) {
+            JOptionPane.showMessageDialog(null, "Nenhum aluno cadastrado.");
+            return;
         }
+        JOptionPane.showMessageDialog(null, armazenador.listar());
     }
 
-    /**
-     * Exibe em uma janela grafica o total de alunos cadastrados.
-     */
-    // Método para a contagem de alunos cadastrados
+    // ---------------------------------------------------------------- contagem
+    @Override
     public void contagem() {
-        JOptionPane.showMessageDialog(null, "Total: " + armazenador.contagem());
+        JOptionPane.showMessageDialog(null, "Total de alunos: " + armazenador.contagem());
     }
 
-    /**
-     * Solicita o nome do arquivo via dialogo grafico e salva o cadastro atual.
-     */
+    // ------------------------------------------------------------------ salvar
+    @Override
     public void salvarArquivo() {
         String nomeArq;
-        do {
-            nomeArq = JOptionPane.showInputDialog("Arquivo:");
-            if (nomeArq == null) return;
-            if (nomeArq.isBlank()) {
-                JOptionPane.showMessageDialog(null, "Insira um Arquivo válido.");
+        if(!armazenador.quantidadeMinAlunos()){
+            do {
+                nomeArq = JOptionPane.showInputDialog("Nome do arquivo:");
+                if (nomeArq == null) return;
+                if (nomeArq.isBlank()) JOptionPane.showMessageDialog(null, "Insira um nome válido.");
+            } while (nomeArq.isBlank());
+    
+            try {
+                ArquivoBinario ab = new ArquivoBinario(nomeArq);
+                ab.gravarObj(armazenador.retornarAlunos());
+                JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!");
+            } catch (Exception e) {
+                JOptionPane.showMessageDialog(null, "Erro ao salvar: " + e.getMessage());
             }
-        } while (nomeArq.isBlank());
-        try {
-            ArquivoBinario Ab = new ArquivoBinario(nomeArq);
-            Ab.gravarObj(armazenador.retornarAlunos());
-            JOptionPane.showMessageDialog(null, "Arquivo salvo com sucesso!");
-        } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao salvar arquivo: " + e.getMessage());
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Não há alunos cadastrados.");
         }
     }
 
-    /**
-     * Solicita o nome do arquivo via dialogo grafico e carrega o cadastro salvo.
-     * @return array de alunos lido do arquivo, ou null em caso de erro
-     */
+    // -------------------------------------------------------------------- ler
+    @Override
     public Object lerArquivo() {
         String nomeArq;
         do {
-            nomeArq = JOptionPane.showInputDialog("Arquivo:");
+            nomeArq = JOptionPane.showInputDialog("Nome do arquivo:");
             if (nomeArq == null) return null;
-            if (nomeArq.isBlank()) {
-                JOptionPane.showMessageDialog(null, "Insira um Arquivo válido.");
-            }
+            if (nomeArq.isBlank()) JOptionPane.showMessageDialog(null, "Insira um nome válido.");
         } while (nomeArq.isBlank());
+
         try {
-            ArquivoBinario Ab = new ArquivoBinario(nomeArq);
-            Aluno[] alunos = (Aluno[]) Ab.lerObj();
+            ArquivoBinario ab = new ArquivoBinario(nomeArq);
+            Aluno[] alunos = (Aluno[]) ab.lerObj();
             JOptionPane.showMessageDialog(null, "Arquivo carregado com sucesso!");
             return alunos;
         } catch (Exception e) {
-            JOptionPane.showMessageDialog(null, "Erro ao carregar arquivo: " + e.getMessage());
+            JOptionPane.showMessageDialog(null, "Erro ao carregar: " + e.getMessage());
             return null;
         }
     }
 
-    /**
-     * Exibe o menu principal em uma janela grafica e gerencia as opcoes do usuario.
-     */
-    // Método para o menu principal do cadastro
+    // ----------------------------------------------------------------- executar
+    @Override
     public void executar() {
-        String[] opcoes = {"Inserir Aluno", "Remover Aluno", "Listar Alunos", "Editar Cadastro", "Salvar Arquivo", "Ler Arquivo", "Sair"};
+        String[] opcoes = {
+            "Inserir Aluno", "Remover Aluno", "Listar Alunos",
+            "Editar Cadastro", "Contagem", "Salvar Arquivo", "Ler Arquivo", "Sair"
+        };
         int op;
-
         do {
             op = JOptionPane.showOptionDialog(
                     null,
                     "Escolha uma opção:",
-                    "Menu Cadastro",
+                    "Menu — Cadastro de Alunos",
                     JOptionPane.DEFAULT_OPTION,
                     JOptionPane.QUESTION_MESSAGE,
                     null,
                     opcoes,
                     opcoes[0]
             );
-
-            // Fechou a janela → trata como Sair
-            if (op == -1) op = 7;
+            if (op == -1) op = 7; // fechou a janela → Sair
 
             switch (op) {
-                case 0:
-                    inserirAluno();
-                    break;
-                case 1:
-                    removerAluno();
-                    break;
-                case 2:
-                    listarAlunos();
-                    break;
-                case 3:
-                    editarAluno();
-                    break;
-                case 4:
-                    salvarArquivo();
-                    break;
-                case 5:
-                    armazenador.setAlunos((Aluno[]) lerArquivo());
-                    break;
+                case 0: inserirAluno(); break;
+                case 1: removerAluno(); break;
+                case 2: listarAlunos(); break;
+                case 3: editarAluno();  break;
+                case 4: contagem();     break;
+                case 5: salvarArquivo(); break;
                 case 6:
+                    Aluno[] lidos = (Aluno[]) lerArquivo();
+                    if (lidos != null) armazenador.setAlunos(lidos);
+                    break;
+                case 7:
                     JOptionPane.showMessageDialog(null, "Saindo...");
                     break;
                 default:
                     JOptionPane.showMessageDialog(null, "Opção inválida.");
-                    break;
             }
-        } while (op != 6 && op != 7);
+        } while (op != 7);
     }
 }

@@ -1,170 +1,126 @@
 package Controller;
+
 import Model.Aluno;
 
-import javax.swing.*;
-
 /**
- * Implementa o armazenamento de alunos em um array.
+ * Implementa o armazenamento de alunos usando uma lista encadeada.
+ * Não há limite de capacidade pré-definido.
  */
-public class Armazenador implements ArmazenadorInterface{
-    //Array do tipo aluno
-    private Aluno arm[];
-
-    //Contador do total de alunos cadastrados
-    private int cont = 0;
+public class Armazenador implements ArmazenadorInterface {
+    private ListaEncadeada lista;
 
     /**
-     * Construtor do armazenador.
-     * @param qtde quantidade maxima de alunos a serem armazenados
+     * Construtor — capacidade ilimitada, sem parâmetros necessários.
      */
-    //Construtor do armazenamento
-    public Armazenador(int qtde){
-        arm = new Aluno[qtde];
+    public Armazenador() {
+        lista = new ListaEncadeada();
     }
 
     /**
-     * Insere um aluno no array.
+     * Insere um aluno na lista encadeada.
      * @param a aluno a ser inserido
-     * @return true se inserido com sucesso, false se o cadastro estiver cheio
+     * @return true sempre (sem limite de capacidade)
      */
-    //Metodo de inserir alunos na array(usuario não vê)
-    public boolean inserir(Aluno a){
-        if(cont < arm.length){//Verifica se há espaço para inserir um aluno no array
-            for(int i = 0; i < arm.length; i++){
-                if(arm[i] == null){//Procura a primeira posição null, achou, inseriu
-                    this.arm[i] = a;
-                    cont++;
-                    return true;
-                }
-            }
-        }
-        return false;
+    @Override
+    public boolean inserir(Aluno a) {
+        lista.inserir(a);
+        return true;
     }
 
     /**
-     * Remove um aluno do array baseado em seu Ra.
-     * @param ra registro academico do aluno a ser removido
-     * @return true se removido com sucesso, false se nao encontrado
+     * Remove um aluno da lista baseado em seu RA.
+     * @param ra registro acadêmico do aluno
+     * @return true se removido, false se não encontrado
      */
-    //Metodo de inserir alunos na array
-    public boolean remover(String ra){
-        for(int i = 0; i < arm.length; i++){
-            if(arm[i] != null && arm[i].getRa().equals(ra)){//Procura o aluno baseado em seu Ra
-                arm[i] = null;
-                cont--;
-                return true;
-            }
-        }
-        return false;//Se não achou retorna false
+    @Override
+    public boolean remover(String ra) {
+        return lista.remover(ra);
     }
 
     /**
-     * Busca e retorna o aluno com o Ra passado como parametro.
-     * @param ra registro academico do aluno a ser buscado
-     * @return aluno encontrado ou null se nao existir
+     * Busca e retorna o aluno com o RA informado.
+     * @param ra registro acadêmico
+     * @return aluno encontrado ou null
      */
-    public Aluno buscarAluno(String ra){//Retorna o aluno com o Ra passado como parâmetro
-        for (int i = 0; i < arm.length; i++) {
-            if (arm[i] != null && arm[i].getRa().equals(ra)) {
-                return arm[i];
-            }
-        }
-        return null;//se não achou retorna null
+    @Override
+    public Aluno buscarAluno(String ra) {
+        return lista.buscar(ra);
     }
 
     /**
      * Lista todos os alunos cadastrados.
-     * @return string com os dados de todos os alunos cadastrados
+     * @return string formatada com os dados de todos os alunos
      */
-    //Método para listar os alunos cadastrados
+    @Override
     public String listar() {
         StringBuilder sb = new StringBuilder();
         sb.append("=== Lista de Alunos ===\n\n");
 
-        int exibidos = 0;
-        for (int i = 0; i < arm.length; i++) {
-            if (arm[i] != null) {//Se a posição não for null(existe um aluno), retorna seus dados
-                exibidos++;
-                sb.append("Aluno ").append(exibidos).append(":\n");
-                sb.append("RA: ").append(arm[i].getRa()).append("\n");
-                sb.append("Nome: ").append(arm[i].getNome().getNome()).append("\n");
-                sb.append("Idade: ").append(arm[i].getIdade()).append("\n");
-                sb.append("Curso: ").append(arm[i].getCurso()).append("\n");
-                sb.append("Semestre: ").append(arm[i].getSemestre()).append("\n\n");
-            }
+        No atual = lista.getCabeca();
+        int num = 1;
+        while (atual != null) {
+            Aluno a = atual.getAluno();
+            sb.append("Aluno ").append(num++).append(":\n");
+            sb.append("RA: ").append(a.getRa()).append("\n");
+            sb.append("Nome: ").append(a.getNome().getNome()).append("\n");
+            sb.append("Idade: ").append(a.getIdade()).append("\n");
+            sb.append("Curso: ").append(a.getCurso()).append("\n");
+            sb.append("Semestre: ").append(a.getSemestre()).append("\n\n");
+            atual = atual.getProximo();
         }
-
         return sb.toString();
     }
 
     /**
      * Retorna a quantidade de alunos cadastrados.
-     * @return total de alunos cadastrados
      */
-    //Método para retornar a quantidade de alunos cadastrados
-    public int contagem(){
-        return cont;
+    @Override
+    public int contagem() {
+        return lista.getTamanho();
     }
 
     /**
-     * Verifica se o cadastro esta cheio.
-     * @return true se cheio, false caso contrario
+     * Com lista encadeada não há limite de capacidade.
+     * @return sempre false
      */
-    //Método para saber se o cadastro esta cheio
-    public boolean quantidadeMaxAlunos(){
-        return cont == arm.length;
-    }//true = cheio
-
-    /**
-     * Verifica se o cadastro esta vazio.
-     * @return true se vazio, false caso contrario
-     */
-    //Método para saber se o cadastro está vazio
-    public boolean quantidadeMinAlunos(){
-        return cont == 0;
-    }//true = vazio
-
-    /**
-     * Verifica se um Ra ja pertence ao cadastro.
-     * @param ra registro academico a ser verificado
-     * @return true se o Ra nao existe, false se ja estiver em uso
-     */
-    //Método para saber se um Ra pertence ao cadastro
-    public boolean validarRA(String ra){
-        for(int  i = 0; i < arm.length; i++){//Varre todo o cadastro em busca do Ra
-            if(arm[i] != null && arm[i].getRa().equals(ra)){
-                return false;//Achou retorna false
-            }
-        }
-        return true;//Não achou retorna true
+    @Override
+    public boolean quantidadeMaxAlunos() {
+        return false;
     }
 
     /**
-     * Retorna o array completo de alunos.
-     * @return array de alunos
+     * Verifica se o cadastro está vazio.
+     * @return true se não houver alunos cadastrados
      */
-    public Aluno[] retornarAlunos(){
-        return arm;
+    @Override
+    public boolean quantidadeMinAlunos() {
+        return lista.isVazia();
     }
 
     /**
-     * Define o array de alunos do armazenador e recalcula o contador.
-     * @param alunos array de alunos a ser definido
+     * Verifica se um RA já está em uso.
+     * @param ra registro acadêmico a validar
+     * @return true se o RA ainda não existe, false se já está em uso
      */
-    public void setAlunos(Aluno[] alunos){
-        if(alunos == null) return;
-        // Se o arquivo tiver mais alunos do que a capacidade atual,
-        // expande o array automaticamente para o tamanho do arquivo
-        if(alunos.length > arm.length){
-            this.arm = new Aluno[alunos.length];
-        }
-        this.arm = alunos;
-        // recalcula o contador
-        cont = 0;
-        for (Aluno a : arm) {
-            if (a != null) {
-                cont++;
-            }
-        }
+    @Override
+    public boolean validarRA(String ra) {
+        return lista.validarRA(ra);
+    }
+
+    /**
+     * Retorna os alunos como array (para serialização em arquivo).
+     */
+    @Override
+    public Aluno[] retornarAlunos() {
+        return lista.toArray();
+    }
+
+    /**
+     * Carrega alunos a partir de um array (ao ler arquivo).
+     * @param alunos array de alunos
+     */
+    @Override
+    public void setAlunos(Aluno[] alunos) {
+        lista.carregarDeArray(alunos);
     }
 }

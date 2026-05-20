@@ -1,7 +1,9 @@
 #BlueJ class context
 comment0.target=Aluno
+comment0.text=\r\n\ Representa\ a\ entidade\ Aluno\ dentro\ do\ sistema\ CadastroAluno.\r\n\ Armazena\ as\ informa\u00E7\u00F5es\ b\u00E1sicas\ de\ identifica\u00E7\u00E3o\ e\ as\ notas\ para\ an\u00E1lise.\r\n\ *\ @author\ Ana\r\n\ @version\ 1.0\r\n
 comment1.params=nome\ idade\ ra\ curso\ semestre
 comment1.target=Aluno(java.lang.String,\ int,\ java.lang.String,\ java.lang.String,\ int)
+comment1.text=\r\n\ Construtor\ da\ classe\ Aluno\ para\ inicializa\u00E7\u00E3o\ de\ dados.\r\n\ *\ @param\ nome\ O\ nome\ completo\ do\ estudante.\r\n\ @param\ nota\ A\ nota\ final\ a\ ser\ registrada\ no\ CadastroAluno.\r\n
 comment2.params=
 comment2.target=java.lang.String\ getRa()
 comment3.params=

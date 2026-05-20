@@ -1,9 +1,9 @@
 #BlueJ package file
-dependency1.from=NomePessoa
-dependency1.to=Texto
+dependency1.from=Pessoa
+dependency1.to=NomePessoa
 dependency1.type=UsesDependency
-dependency2.from=Pessoa
-dependency2.to=NomePessoa
+dependency2.from=NomePessoa
+dependency2.to=Texto
 dependency2.type=UsesDependency
 objectbench.height=183
 objectbench.width=1896
