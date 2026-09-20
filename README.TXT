@@ -10,7 +10,7 @@ Um sistema desenvolvido para gerenciar o registro de estudantes, permitindo real
 - **Consulta / Listagem:** Visualização de todos os alunos cadastrados ou busca por registros específicos.
 - **Atualização de Dados:** Modificação de informações de estudantes já existentes.
 - **Remoção:** Exclusão de registros do sistema.
-- **Persistência de Dados:** *(Opcional: ajuste caso os dados sejam salvos em arquivos, banco de dados ou apenas em memória).*
+- **Persistência de Dados:**
 
 ---
 
